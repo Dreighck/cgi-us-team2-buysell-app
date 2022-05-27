@@ -1,12 +1,14 @@
 package com.cgi.commerceapp.service;
 
 
+import com.cgi.commerceapp.exceptions.CartWithTheIDDoesntExistException;
 import com.cgi.commerceapp.exceptions.ProductWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.exceptions.ProductWithTheIDDoesntExistException;
 import com.cgi.commerceapp.model.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -18,6 +20,6 @@ public interface ProductService {
     Product addNewProduct(Product product) throws ProductWithTheIDAlreadyExistsException;
     void deleteProduct(int id) throws ProductWithTheIDDoesntExistException;
     Product updateProduct(Product product) throws ProductWithTheIDAlreadyExistsException, ProductWithTheIDDoesntExistException;
-    void removeProductFromCart(int productId, int cartId) throws ProductWithTheIDDoesntExistException;
-    public Product addProductToCart(int productId, int cartId) throws ProductWithTheIDAlreadyExistsException;
+    void removeProductFromCart(int productId, int cartId) throws ProductWithTheIDDoesntExistException, CartWithTheIDDoesntExistException;
+    void addProductToCart(int productId, int cartId) throws ProductWithTheIDAlreadyExistsException, IOException, ProductWithTheIDDoesntExistException, CartWithTheIDDoesntExistException;
 }

@@ -13,6 +13,5 @@ public class CartController {
    @Autowired
    CartService cartService;
 
-// create handlers for creating, deleting and getting the cart
 
 }

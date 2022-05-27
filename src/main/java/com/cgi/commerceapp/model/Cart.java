@@ -5,15 +5,14 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collation = "cart")
 public class Cart {
   
 	@Id
 	private int cartNumber;
 	private int userId;
 	private List<Product> products;
-	
-	
+
 	public Cart(int cartNumber, int userId, List<Product> products) {
 		this.cartNumber = cartNumber;
 		this.userId = userId;
@@ -40,6 +39,8 @@ public class Cart {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
+	public void addProduct(Product product){ this.products.add(product);}
+	public void removeProduct(Product product){this.products.remove(product);}
 	@Override
 	public String toString() {
 		return "Cart [cartNumber=" + cartNumber + ", userId=" + userId + ", products=" + products + "]";
