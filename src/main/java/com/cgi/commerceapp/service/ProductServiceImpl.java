@@ -77,11 +77,11 @@ public class ProductServiceImpl implements ProductService {
             cart = cartRepo.findById(cartId).get();
             cart.removeProduct(product);
         } else throw new CartWithTheIDDoesntExistException();
-//        List<Product> list = cart.getProducts();
-//        list.remove(product);
-//        cart.setProducts(list);
         cartRepo.save(cart);
     }
+//    List<Product> list = cart.getProducts();
+//        list.remove(product);
+//        cart.setProducts(list);
 
     @Override
     public void addProductToCart(int productId, int cartId)
@@ -104,9 +104,6 @@ public class ProductServiceImpl implements ProductService {
         cart.addProduct(product);
         cartRepo.save(cart);
     }
-//        List<Product> list = cart.getProducts();
-//        list.add(product);
-//        cart.setProducts(list);
 }
 
     
