@@ -50,8 +50,7 @@ public class ProductController {
 	public ResponseEntity<?> addProductHandler(@RequestBody Product product) {
 		ResponseEntity<?> responseEntity;
 		try {
-			Product prod;
-			prod = productService.addNewProduct(product);
+			Product prod=productService.addNewProduct(product);
 			responseEntity = new ResponseEntity<>(prod, HttpStatus.CREATED);
 		} catch (ProductWithTheIDAlreadyExistsException e) {
 			responseEntity = new ResponseEntity<>("Failed to store, Duplicate", HttpStatus.CONFLICT);

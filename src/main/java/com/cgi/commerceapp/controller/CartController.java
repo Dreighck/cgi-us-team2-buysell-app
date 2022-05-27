@@ -1,6 +1,7 @@
 package com.cgi.commerceapp.controller;
 
 import com.cgi.commerceapp.exceptions.ProductWithTheIDDoesntExistException;
+import com.cgi.commerceapp.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.cgi.commerceapp.exceptions.CartWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.exceptions.CartWithTheIDDoesntExistException;
@@ -81,7 +84,14 @@ public ResponseEntity<?> deleteCartHandler(@PathVariable("cartId") int id)
    return new ResponseEntity<>(HttpStatus.GONE);
 }
 @DeleteMapping("/{cartId}/{prodId}")
-   public void removeProductFromCartHandler(@PathVariable("prodId")int id, @PathVariable("cartId")int cartId) throws ProductWithTheIDDoesntExistException {
-      //Kristen still working this part
+   public ResponseEntity<?> removeProductFromCartHandler(@PathVariable("prodId")int prodId, @PathVariable("cartId")int cartId) throws CartWithTheIDDoesntExistException {
+      List<Product> productList= new ArrayList<>(cartService.getCartById(cartId).getProducts());
+      for(Product product : productList){
+         if(product.getId()==prodId){
+            cartService.removeProductFromCart(cartId,product);
+            return new ResponseEntity<>(product,HttpStatus.GONE);
+         }
+      }
+      return new ResponseEntity<>(prodId,HttpStatus.NOT_FOUND);
    }
 }

@@ -25,4 +25,6 @@ public interface CartService {
    Cart updateCart(Cart cart) throws CartWithTheIDDoesntExistException;
 
     void addProductToCart(int userId, Product product);
+
+    void removeProductFromCart(int userId, Product product);
 }
