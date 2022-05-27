@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import com.cgi.commerceapp.exceptions.cartWithTheIDAlreadyExistsException;
-import com.cgi.commerceapp.exceptions.cartWithTheIDDoesntExistException;
+import com.cgi.commerceapp.exceptions.CartWithTheIDAlreadyExistsException;
+import com.cgi.commerceapp.exceptions.CartWithTheIDDoesntExistException;
 import com.cgi.commerceapp.model.Cart;
 import com.cgi.commerceapp.service.CartService;
 
@@ -36,8 +36,8 @@ public ResponseEntity<List<Cart>> getAllCarts() {
 }
 
 @GetMapping(value = { "/carts/{cartId}" })
-public ResponseEntity<Cart> getcart(@PathVariable("cartId") int cartId)
-      throws cartWithTheIDDoesntExistException {
+public ResponseEntity<Cart> getCart(@PathVariable("cartId") int cartId)
+      throws CartWithTheIDDoesntExistException {
    Cart cart = cartService.getCartById(cartId);
    ResponseEntity<Cart> responseEntity;
    responseEntity = new ResponseEntity<>(cart, HttpStatus.OK);
@@ -45,27 +45,26 @@ public ResponseEntity<Cart> getcart(@PathVariable("cartId") int cartId)
 }
 
 @PostMapping({ "/carts", "" })
-public ResponseEntity<?> addcartHandler(@RequestBody Cart cart) {
+public ResponseEntity<?> addCartHandler(@RequestBody Cart cart)  {
    ResponseEntity<?> responseEntity;
-   try {
-      Cart prod = new Cart();
-      prod = cartService.addNewcart(cart);
-      responseEntity = new ResponseEntity<>(prod, HttpStatus.CREATED);
-   } catch (cartWithTheIDAlreadyExistsException e) {
-      responseEntity = new ResponseEntity<>("Failed to store, Duplicate", HttpStatus.CONFLICT);
+   try{
+      Cart prod = cartService.createNewCart(cart);
+      responseEntity = new ResponseEntity<>(prod, HttpStatus.CREATED);}
+   catch (CartWithTheIDAlreadyExistsException e) {
+      throw new RuntimeException(e);
    }
    return responseEntity;
 }
 
 @PutMapping({ "/carts", "" })
-public ResponseEntity<Cart> updatecartHandler(@RequestBody Cart cart)
-      throws cartWithTheIDDoesntExistException, cartWithTheIDAlreadyExistsException {
+public ResponseEntity<Cart> updateCartHandler(@RequestBody Cart cart)
+      throws CartWithTheIDDoesntExistException, CartWithTheIDAlreadyExistsException {
    return null;
 }
 
 @DeleteMapping("/carts/{cartId}")
-public ResponseEntity<?> deletecartHandler(@PathVariable("cartId") int id)
-      throws cartWithTheIDDoesntExistException {
+public ResponseEntity<?> deleteCartHandler(@PathVariable("cartId") int id)
+      throws CartWithTheIDDoesntExistException {
 
    return null;
 }
