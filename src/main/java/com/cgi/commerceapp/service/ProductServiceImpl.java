@@ -63,6 +63,8 @@ public class ProductServiceImpl implements ProductService{
         throw new ProductWithTheIDDoesntExistException();
     }
 
+
+    //accessing prod repo and cart repo
 	@Override
 	public void removeProductFromCart(int productId, int cartId) throws ProductWithTheIDDoesntExistException {
 		// TODO Auto-generated method stub
