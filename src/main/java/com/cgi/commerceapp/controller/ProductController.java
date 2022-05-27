@@ -60,18 +60,13 @@ public class ProductController {
 	}
 
 	@PutMapping({"/", "","/{prodId}" })
-	public ResponseEntity<?> updateProductHandler(@PathVariable("prodId") int id,@RequestBody Product product)throws  ProductWithTheIDDoesntExistException, ProductWithTheIDAlreadyExistsException{
+	public ResponseEntity<?> updateProductHandler(@PathVariable("prodId") int id,@RequestBody Product product){
 		ResponseEntity<?> responseEntity;
-		try{
-			product.setId(id);
-			Product updatedProduct = productService.updateProduct(product);
-			responseEntity = new ResponseEntity<Product>(updatedProduct, HttpStatus.OK);	
-		}catch(ProductWithTheIDAlreadyExistsException e) {
-				responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-				responseEntity = new ResponseEntity<String>("Failed to update, Product ID already exists.", HttpStatus.ALREADY_REPORTED);
+		try {
+			Product updatedProduct = productService.getProductById(id).updateProduct(product);
+			responseEntity = new ResponseEntity<>(updatedProduct, HttpStatus.OK);
 		}catch(ProductWithTheIDDoesntExistException e){
-			responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-			responseEntity = new ResponseEntity<String>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);	
+			responseEntity = new ResponseEntity<>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);
 		}
 		return responseEntity;
 	}
@@ -81,9 +76,9 @@ public class ProductController {
 				ResponseEntity<?> responseEntity;
 				try{
 					productService.deleteProduct(id);
-					responseEntity = new ResponseEntity<String>("Deleted",HttpStatus.OK);
+					responseEntity = new ResponseEntity<>("Deleted", HttpStatus.OK);
 				}catch(ProductWithTheIDDoesntExistException e){
-					responseEntity = new ResponseEntity<String>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);	
+					responseEntity = new ResponseEntity<>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);
 				}
 				return responseEntity;
 

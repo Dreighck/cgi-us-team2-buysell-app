@@ -66,7 +66,14 @@ public class Product {
 		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description + "]";
 	}
 
-    
+
+	public Product updateProduct(Product product) {
+		this.id= product.getId();
+		this.name=product.getName();
+		this.price= product.getPrice();
+		this.description= product.getDescription();
+		return this;
+	}
 }
 
 
