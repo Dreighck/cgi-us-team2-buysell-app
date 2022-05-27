@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -48,13 +49,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product deleteProduct(int id) throws ProductWithTheIDDoesntExistException {
+    public void deleteProduct(int id) throws ProductWithTheIDDoesntExistException {
         Optional<Product> optional = productRepo.findById(id);
         if (optional.isEmpty())
             throw new ProductWithTheIDDoesntExistException();
         productRepo.deleteById(id);
-        return null;
-        
     }
 
     @Override
@@ -65,7 +64,6 @@ public class ProductServiceImpl implements ProductService {
         }
         throw new ProductWithTheIDDoesntExistException();
     }
-
 
     @Override
     public void removeProductFromCart(int productId, int cartId)
@@ -79,12 +77,11 @@ public class ProductServiceImpl implements ProductService {
             cart = cartRepo.findById(cartId).get();
             cart.removeProduct(product);
         } else throw new CartWithTheIDDoesntExistException();
-//        List<Product> list = cart.getProducts();
+        cartRepo.save(cart);
+    }
+//    List<Product> list = cart.getProducts();
 //        list.remove(product);
 //        cart.setProducts(list);
-        cartRepo.save(cart);
-
-    }
 
     @Override
     public void addProductToCart(int productId, int cartId)
@@ -107,10 +104,6 @@ public class ProductServiceImpl implements ProductService {
         cart.addProduct(product);
         cartRepo.save(cart);
     }
-//        List<Product> list = cart.getProducts();
-//        list.add(product);
-//        cart.setProducts(list);
 }
 
     
-

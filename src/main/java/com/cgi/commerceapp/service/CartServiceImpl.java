@@ -2,6 +2,7 @@ package com.cgi.commerceapp.service;
 
 import java.util.List;
 
+import com.cgi.commerceapp.exceptions.CartWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.exceptions.CartWithTheIDDoesntExistException;
 import com.cgi.commerceapp.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +23,22 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public List<Cart> getAllCart() {
-	
 		return cartRepo.findAll();
 	}
 
 	@Override
 	public Cart getCartById(int id) {
 		return (cartRepo.findById(id).isPresent()) ? cartRepo.findById(id).get() : new Cart();
-
 	}
 	@Override
 	public Cart getCartByUserId(int userId) {
 		return cartRepo.getCartByUserId(userId);
 	}
 	@Override
-	public Cart createNewCart(Cart cart) {
-
-		cartRepo.save(cart);
+	public Cart createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException {
+		if(cartRepo.existsById(cart.getCartNumber()))
+			throw new CartWithTheIDAlreadyExistsException();
+		else cartRepo.save(cart);
 		return cart;
 	}
 
@@ -65,3 +65,4 @@ public class CartServiceImpl implements CartService {
 	
 
 }
+
