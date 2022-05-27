@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "cart")
+@Document
 public class Cart {
   
 	@Id
@@ -21,7 +21,9 @@ public class Cart {
 	
 	public Cart() {}
 
-	public Cart(int cartNumber, int userId, boolean no) {
+	public Cart(int cartNumber, int userId) {
+		this.cartNumber = cartNumber;
+		this.userId = userId;
 	}
 
 	public int getCartNumber() {

@@ -18,7 +18,7 @@ public interface CartService {
    List<Cart> getAllCart();
    Cart getCartById(int id) throws CartWithTheIDDoesntExistException;
    Cart getCartByUserId(int userId);
-   Cart createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException;
+   void createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException;
    void deleteCartById(int cartId) throws CartWithTheIDDoesntExistException;
    double getCostOfCartProducts(int id) throws CartWithTheIDDoesntExistException;
 

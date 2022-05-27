@@ -22,22 +22,22 @@ import com.cgi.commerceapp.service.ProductService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
 	@Autowired
 	ProductService productService;
-	private Product deletedProduct;
 
-	@GetMapping("/products")
+
+	@GetMapping({"/",""})
 	public ResponseEntity<List<Product>> getAllProduct() {
-		List<Product> products = productService.getAllProducts();
+		List<Product> product = productService.getAllProducts();
 		ResponseEntity<List<Product>> responseEntity;
-		responseEntity = new ResponseEntity<>(products, HttpStatus.OK);
+		responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
 		return responseEntity;
 	}
 
-	@GetMapping(value = { "/products/{prodID}" })
+	@GetMapping(value = {"/{prodID}"})
 	public ResponseEntity<Product> getProduct(@PathVariable("prodID") int prodID)
 			throws ProductWithTheIDDoesntExistException {
 		Product product = productService.getProductById(prodID);
@@ -46,7 +46,7 @@ public class ProductController {
 		return responseEntity;
 	}
 
-	@PostMapping({ "/products", "" })
+	@PostMapping({"/", "" })
 	public ResponseEntity<?> addProductHandler(@RequestBody Product product) {
 		ResponseEntity<?> responseEntity;
 		try {
@@ -59,7 +59,7 @@ public class ProductController {
 		return responseEntity;
 	}
 
-	@PutMapping({ "/products", "" })
+	@PutMapping({"/", "" })
 	public ResponseEntity<?> updateProductHandler(@PathVariable("prodId") int id,@RequestBody Product product)throws  ProductWithTheIDDoesntExistException, ProductWithTheIDAlreadyExistsException{
 		ResponseEntity<?> responseEntity;
 		try{
@@ -76,7 +76,7 @@ public class ProductController {
 		return responseEntity;
 	}
 
-	@DeleteMapping("/products/{prodId}")
+	@DeleteMapping("/{prodId}")
 	public ResponseEntity<?> deleteProductHandler(@PathVariable("prodId") int id)
 			throws ProductWithTheIDDoesntExistException {
 				ResponseEntity<?> responseEntity;
@@ -90,11 +90,7 @@ public class ProductController {
 
 	}
 
-	//add and remove prod to cart
-	@DeleteMapping("/carts/{cartId}/{prodId}")
-	public void removeProductFromCartHandlEntity(@PathVariable("prodId")int id, int cartId) throws ProductWithTheIDDoesntExistException{
-           //Kristen still working this part
-	}
+
 
 
 

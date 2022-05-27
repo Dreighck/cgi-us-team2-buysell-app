@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.processing.Generated;
 
-@Document(collation = "product")
+@Document
 public class Product {
   
 	@Id

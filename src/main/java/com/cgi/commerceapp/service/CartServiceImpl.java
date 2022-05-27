@@ -36,11 +36,10 @@ public class CartServiceImpl implements CartService {
 		return cartRepo.getCartByUserId(userId);
 	}
 	@Override
-	public Cart createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException {
+	public void createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException {
 		if(cartRepo.existsById(cart.getCartNumber()))
 			throw new CartWithTheIDAlreadyExistsException();
 		else cartRepo.save(cart);
-		return cart;
 	}
 
 	@Override
