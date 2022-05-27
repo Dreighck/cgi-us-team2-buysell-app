@@ -62,6 +62,13 @@ public class CartServiceImpl implements CartService {
 		return sum;
 	}
 
-	
+	@Override
+	public Cart updateCart(Cart cart) throws CartWithTheIDDoesntExistException {
+		if (cartRepo.findById(cart.getCartNumber()).isPresent())
+			cartRepo.save(cart);
+		else throw new CartWithTheIDDoesntExistException();
+		return cart;
+	}
+
 
 }

@@ -35,7 +35,7 @@ public ResponseEntity<List<Cart>> getAllCarts() {
    return responseEntity;
 }
 
-@GetMapping(value = { "/carts/{cartId}" })
+@GetMapping(value = { "/carts/{cartId}" })//needs cartnotfound
 public ResponseEntity<Cart> getCart(@PathVariable("cartId") int cartId) {
    Cart cart = cartService.getCartById(cartId);
    ResponseEntity<Cart> responseEntity;
@@ -50,22 +50,29 @@ public ResponseEntity<?> addCartHandler(@RequestBody Cart cart)  {
       Cart prod = cartService.createNewCart(cart);
       responseEntity = new ResponseEntity<>(prod, HttpStatus.CREATED);}
    catch (CartWithTheIDAlreadyExistsException e) {
-      throw new RuntimeException(e);
+      responseEntity = new ResponseEntity<>("Cart already exists",HttpStatus.NOT_ACCEPTABLE);
    }
    return responseEntity;
 }
 
-@PutMapping({ "/carts", "" })
-public ResponseEntity<Cart> updateCartHandler(@RequestBody Cart cart)
-      throws CartWithTheIDDoesntExistException, CartWithTheIDAlreadyExistsException {
-   return null;
+@PutMapping({ "/carts", "/carts/{cartId}" })
+public ResponseEntity<?> updateCartHandler(@RequestBody Cart cart,@PathVariable("cartId") int id) {
+   ResponseEntity<?> responseEntity;
+   Cart updatedCart;
+   try{
+      updatedCart = cartService.updateCart(cart);
+      responseEntity = new ResponseEntity<> (updatedCart, HttpStatus.ACCEPTED);
+   } catch (CartWithTheIDDoesntExistException e){
+      responseEntity = new ResponseEntity<>("Cart doesn't exist",HttpStatus.NOT_ACCEPTABLE);
+   }
+   return responseEntity;
 }
 
 @DeleteMapping("/carts/{cartId}")
 public ResponseEntity<?> deleteCartHandler(@PathVariable("cartId") int id)
       throws CartWithTheIDDoesntExistException {
-
-   return null;
+   cartService.deleteCartById(id);
+   return new ResponseEntity<>(HttpStatus.GONE);
 }
 
 

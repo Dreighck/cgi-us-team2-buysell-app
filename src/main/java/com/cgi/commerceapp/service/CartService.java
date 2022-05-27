@@ -20,4 +20,6 @@ public interface CartService {
    Cart createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException;
    void deleteCartById(int cartId) throws CartWithTheIDDoesntExistException;
    double getCostOfCartProducts(int id) throws CartWithTheIDDoesntExistException;
+
+   Cart updateCart(Cart cart) throws CartWithTheIDDoesntExistException;
 }
