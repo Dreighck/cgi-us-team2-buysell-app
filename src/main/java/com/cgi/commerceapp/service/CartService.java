@@ -15,7 +15,7 @@ import com.cgi.commerceapp.model.Cart;
 public interface CartService {
 
    List<Cart> getAllCart();
-   Cart getCartById(int id);
+   Cart getCartById(int id) throws CartWithTheIDDoesntExistException;
    Cart getCartByUserId(int userId);
    Cart createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException;
    void deleteCartById(int cartId) throws CartWithTheIDDoesntExistException;

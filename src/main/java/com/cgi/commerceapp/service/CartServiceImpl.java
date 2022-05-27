@@ -27,8 +27,9 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Cart getCartById(int id) {
-		return (cartRepo.findById(id).isPresent()) ? cartRepo.findById(id).get() : new Cart();
+	public Cart getCartById(int id) throws CartWithTheIDDoesntExistException {
+		if (cartRepo.findById(id).isPresent()) return cartRepo.findById(id).get();
+		else throw new CartWithTheIDDoesntExistException();
 	}
 	@Override
 	public Cart getCartByUserId(int userId) {
