@@ -81,8 +81,8 @@ public class ProductController {
 			throws ProductWithTheIDDoesntExistException {
 				ResponseEntity<?> responseEntity;
 				try{
-					deletedProduct = productService.deleteProduct(id);
-					responseEntity = new ResponseEntity<Product>(deletedProduct,HttpStatus.OK);	
+					productService.deleteProduct(id);
+					responseEntity = new ResponseEntity<String>("Deleted",HttpStatus.OK);
 				}catch(ProductWithTheIDDoesntExistException e){
 					responseEntity = new ResponseEntity<String>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);	
 				}
