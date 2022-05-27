@@ -2,8 +2,8 @@ package com.cgi.commerceapp.controller;
 
 import java.util.List;
 
-import com.cgi.commerceapp.exceptions.cartWithTheIDAlreadyExistsException;
-import com.cgi.commerceapp.exceptions.cartWithTheIDDoesntExistException;
+import com.cgi.commerceapp.exceptions.CartWithTheIDAlreadyExists;
+import com.cgi.commerceapp.exceptions.CartWithTheIDDoesntExistException;
 import com.cgi.commerceapp.model.Cart;
 import com.cgi.commerceapp.service.CartService;
 
@@ -26,7 +26,6 @@ public class CartController {
    @Autowired
    CartService cartService;
 
-// create handlers for creating, deleting and getting the cart
 
 @GetMapping("/cart")
 public ResponseEntity<List<Cart>> getAllCarts() {
@@ -38,7 +37,7 @@ public ResponseEntity<List<Cart>> getAllCarts() {
 
 @GetMapping(value = { "/carts/{cartId}" })
 public ResponseEntity<Cart> getcart(@PathVariable("cartId") int cartId)
-      throws cartWithTheIDDoesntExistException {
+      throws CartWithTheIDDoesntExistException {
    Cart cart = cartService.getCartById(cartId);
    ResponseEntity<Cart> responseEntity;
    responseEntity = new ResponseEntity<>(cart, HttpStatus.OK);
@@ -46,7 +45,7 @@ public ResponseEntity<Cart> getcart(@PathVariable("cartId") int cartId)
 }
 
 @PostMapping({ "/carts", "" })
-public ResponseEntity<?> addcartHandler(@RequestBody Cart cart) throws cartWithTheIDAlreadyExistsException{
+public ResponseEntity<?> addcartHandler(@RequestBody Cart cart) throws CartWithTheIDAlreadyExists{
    ResponseEntity<?> responseEntity;
    cart = cartService.createNewCart(cart);
    responseEntity = new ResponseEntity<>(cart, HttpStatus.CREATED);
@@ -55,13 +54,13 @@ public ResponseEntity<?> addcartHandler(@RequestBody Cart cart) throws cartWithT
 
 @PutMapping({ "/carts", "" })
 public ResponseEntity<Cart> updatecartHandler(@RequestBody Cart cart)
-      throws cartWithTheIDDoesntExistException, cartWithTheIDAlreadyExistsException {
+      throws CartWithTheIDDoesntExistException, CartWithTheIDAlreadyExists {
    return null;
 }
 
 @DeleteMapping("/carts/{cartId}")
 public ResponseEntity<?> deletecartHandler(@PathVariable("cartId") int id)
-      throws cartWithTheIDDoesntExistException {
+      throws CartWithTheIDDoesntExistException {
 
    return null;
 }

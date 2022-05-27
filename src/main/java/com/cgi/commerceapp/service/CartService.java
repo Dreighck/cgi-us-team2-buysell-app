@@ -3,6 +3,7 @@ package com.cgi.commerceapp.service;
 
 import java.util.List;
 
+import com.cgi.commerceapp.exceptions.CartWithTheIDDoesntExistException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,6 @@ public interface CartService {
    Cart getCartById(int id);
    Cart getCartByUserId(int userId);
    Cart createNewCart(Cart cart);
-   void deleteCartById(int cartId);
-   double getCostofCartProducts(int id);
+   void deleteCartById(int cartId) throws CartWithTheIDDoesntExistException;
+   double getCostOfCartProducts(int id) throws CartWithTheIDDoesntExistException;
 }

@@ -1,6 +1,7 @@
 package com.cgi.commerceapp.service;
 
 
+import com.cgi.commerceapp.exceptions.CartWithTheIDDoesntExistException;
 import com.cgi.commerceapp.exceptions.ProductWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.exceptions.ProductWithTheIDDoesntExistException;
 import com.cgi.commerceapp.model.Cart;
@@ -16,14 +17,13 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepo productRepo;
-    
+
     @Autowired
     private CartRepo cartRepo;
-
 
     @Override
     public List<Product> getAllProducts() {
@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product addNewProduct(Product product) throws ProductWithTheIDAlreadyExistsException {
         Optional<Product> optional = productRepo.findById(product.getId());
-        if (optional.isEmpty()){
+        if (optional.isEmpty()) {
             return productRepo.save(product);
         }
         throw new ProductWithTheIDAlreadyExistsException();
@@ -60,42 +60,57 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product updateProduct(Product product) throws ProductWithTheIDDoesntExistException {
         Optional<Product> optional = productRepo.findById(product.getId());
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             return productRepo.save(product);
         }
         throw new ProductWithTheIDDoesntExistException();
     }
 
 
-    //accessing prod repo and cart repo
-	@Override
-	public void removeProductFromCart(int productId, int cartId) throws ProductWithTheIDDoesntExistException {
-		
-//		get the cart from the repo
-//		reovmove the product from the cart's product list
-//		save the new cart back to the repo
-
-		Product product = productRepo.findById(productId).get();
-        Cart cart = cartRepo.findById(cartId).get();
-        List<Product> list = cart.getProducts();
-        list.remove(product);
-        cart.setProducts(list);
+    @Override
+    public void removeProductFromCart(int productId, int cartId)
+            throws ProductWithTheIDDoesntExistException, CartWithTheIDDoesntExistException {
+        Product product;
+        Cart cart;
+        if (productRepo.findById(productId).isPresent())
+            product = productRepo.findById(productId).get();
+        else throw new ProductWithTheIDDoesntExistException();
+        if (cartRepo.findById(cartId).isPresent()) {
+            cart = cartRepo.findById(cartId).get();
+            cart.removeProduct(product);
+        } else throw new CartWithTheIDDoesntExistException();
+//        List<Product> list = cart.getProducts();
+//        list.remove(product);
+//        cart.setProducts(list);
         cartRepo.save(cart);
-	}
 
-	@Override
-	public Product addProductToCart(int productId, int cartId) throws ProductWithTheIDAlreadyExistsException {
-        
-//		get the cart from the repo
-//		add the new product to the cart's product list
-//		save the cart back to the repo
-        Product product = productRepo.findById(productId).get();
-        Cart cart = cartRepo.findById(cartId).get();
-        List<Product> list = cart.getProducts();
-        list.add(product);
-        cart.setProducts(list);
-        cartRepo.save(cart);
-        return product;
     }
-    
+
+    @Override
+    public void addProductToCart(int productId, int cartId)
+            throws ProductWithTheIDAlreadyExistsException,
+            ProductWithTheIDDoesntExistException,
+            CartWithTheIDDoesntExistException {
+        Product product;
+        Cart cart;
+        if (productRepo.findById(productId).isPresent())
+            product = productRepo.findById(productId).get();
+        else throw new ProductWithTheIDDoesntExistException();
+        if (cartRepo.findById(cartId).isPresent())
+            cart = cartRepo.findById(cartId).get();
+        else throw new CartWithTheIDDoesntExistException();
+        List<Product> products = cart.getProducts();
+        for (Product prod : products) {
+            if (prod.getId() == (product.getId()))
+                throw new ProductWithTheIDAlreadyExistsException();
+        }
+        cart.addProduct(product);
+        cartRepo.save(cart);
+    }
+//        List<Product> list = cart.getProducts();
+//        list.add(product);
+//        cart.setProducts(list);
 }
+
+    
+
