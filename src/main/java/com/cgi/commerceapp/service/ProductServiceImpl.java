@@ -66,7 +66,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void removeProductFromCart(int productId, int cartId) throws ProductWithTheIDDoesntExistException, CartWithTheIDDoesntExistException {
+    public void removeProductFromCart(int productId, int cartId)
+            throws ProductWithTheIDDoesntExistException, CartWithTheIDDoesntExistException {
         Product product;
         Cart cart;
         if (productRepo.findById(productId).isPresent())
