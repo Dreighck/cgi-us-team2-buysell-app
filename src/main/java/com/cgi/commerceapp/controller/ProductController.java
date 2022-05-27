@@ -50,7 +50,7 @@ public class ProductController {
 	public ResponseEntity<?> addProductHandler(@RequestBody Product product) {
 		ResponseEntity<?> responseEntity;
 		try {
-			Product prod = new Product();
+			Product prod;
 			prod = productService.addNewProduct(product);
 			responseEntity = new ResponseEntity<>(prod, HttpStatus.CREATED);
 		} catch (ProductWithTheIDAlreadyExistsException e) {
@@ -81,6 +81,5 @@ public class ProductController {
 					responseEntity = new ResponseEntity<>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);
 				}
 				return responseEntity;
-
 	}
 }
