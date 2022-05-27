@@ -11,4 +11,7 @@ import com.cgi.commerceapp.model.Cart;
 public interface CartRepo extends MongoRepository<Cart, Integer>{
 //    Cart findByItemNumber(Long itemNumber);
     //
+
+
+    Cart getCartByUserId(int id);
 }

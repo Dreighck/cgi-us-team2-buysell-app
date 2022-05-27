@@ -3,6 +3,7 @@ package com.cgi.commerceapp.service;
 
 import com.cgi.commerceapp.exceptions.ProductWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.exceptions.ProductWithTheIDDoesntExistException;
+import com.cgi.commerceapp.model.Cart;
 import com.cgi.commerceapp.model.Product;
 import com.cgi.commerceapp.repo.CartRepo;
 import com.cgi.commerceapp.repo.ProductRepo;
@@ -69,16 +70,28 @@ public class ProductServiceImpl implements ProductService{
 //		get the cart from the repo
 //		reovmove the product from the cart's product list
 //		save the new cart back to the repo
-		
+
+		Product product = productRepo.findById(productId).get();
+        Cart cart = cartRepo.findById(cartId).get();
+        List<Product> list = cart.getProducts();
+        list.remove(product);
+        cart.setProducts(list);
+        cartRepo.save(cart);
 	}
 
 	@Override
 	public Product addProductToCart(int productId, int cartId) throws ProductWithTheIDAlreadyExistsException {
-		// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 //		get the cart from the repo
 //		add the new product to the cart's product list
 //		save the cart back to the repo
-		return null;
-	}
+        Product product = productRepo.findById(productId).get();
+        Cart cart = cartRepo.findById(cartId).get();
+        List<Product> list = cart.getProducts();
+        list.add(product);
+        cart.setProducts(list);
+        cartRepo.save(cart);
+        return product;
+    }
     
 }
