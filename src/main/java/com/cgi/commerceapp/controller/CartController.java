@@ -35,7 +35,7 @@ public ResponseEntity<List<Cart>> getAllCarts() {
    return responseEntity;
 }
 
-@GetMapping(value = { "/carts/{cartId}" })//needs cartnotfound
+@GetMapping(value = { "/carts/{cartId}" })
 public ResponseEntity<?> getCart(@PathVariable("cartId") int cartId) {
    Cart cart;
    ResponseEntity<?> responseEntity;
