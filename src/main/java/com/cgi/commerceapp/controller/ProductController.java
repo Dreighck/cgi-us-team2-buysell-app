@@ -59,7 +59,7 @@ public class ProductController {
 		return responseEntity;
 	}
 
-	@PutMapping({"/", "" })
+	@PutMapping({"/", "","/{prodId}" })
 	public ResponseEntity<?> updateProductHandler(@PathVariable("prodId") int id,@RequestBody Product product)throws  ProductWithTheIDDoesntExistException, ProductWithTheIDAlreadyExistsException{
 		ResponseEntity<?> responseEntity;
 		try{
@@ -77,8 +77,7 @@ public class ProductController {
 	}
 
 	@DeleteMapping("/{prodId}")
-	public ResponseEntity<?> deleteProductHandler(@PathVariable("prodId") int id)
-			throws ProductWithTheIDDoesntExistException {
+	public ResponseEntity<?> deleteProductHandler(@PathVariable("prodId") int id) {
 				ResponseEntity<?> responseEntity;
 				try{
 					productService.deleteProduct(id);
@@ -89,9 +88,4 @@ public class ProductController {
 				return responseEntity;
 
 	}
-
-
-
-
-
 }
