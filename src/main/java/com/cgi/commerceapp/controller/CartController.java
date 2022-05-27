@@ -26,7 +26,6 @@ public class CartController {
    @Autowired
    CartService cartService;
 
-// create handlers for creating, deleting and getting the cart
 
 @GetMapping("/cart")
 public ResponseEntity<List<Cart>> getAllCarts() {
