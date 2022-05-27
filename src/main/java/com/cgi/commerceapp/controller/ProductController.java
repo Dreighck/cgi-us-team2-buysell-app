@@ -22,22 +22,22 @@ import com.cgi.commerceapp.service.ProductService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
 	@Autowired
 	ProductService productService;
-	private Product deletedProduct;
 
-	@GetMapping("/products")
+
+	@GetMapping({"/",""})
 	public ResponseEntity<List<Product>> getAllProduct() {
-		List<Product> products = productService.getAllProducts();
+		List<Product> product = productService.getAllProducts();
 		ResponseEntity<List<Product>> responseEntity;
-		responseEntity = new ResponseEntity<>(products, HttpStatus.OK);
+		responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
 		return responseEntity;
 	}
 
-	@GetMapping(value = { "/products/{prodID}" })
+	@GetMapping(value = {"/{prodID}"})
 	public ResponseEntity<Product> getProduct(@PathVariable("prodID") int prodID)
 			throws ProductWithTheIDDoesntExistException {
 		Product product = productService.getProductById(prodID);
@@ -46,11 +46,11 @@ public class ProductController {
 		return responseEntity;
 	}
 
-	@PostMapping({ "/products", "" })
+	@PostMapping({"/", "" })
 	public ResponseEntity<?> addProductHandler(@RequestBody Product product) {
 		ResponseEntity<?> responseEntity;
 		try {
-			Product prod = new Product();
+			Product prod;
 			prod = productService.addNewProduct(product);
 			responseEntity = new ResponseEntity<>(prod, HttpStatus.CREATED);
 		} catch (ProductWithTheIDAlreadyExistsException e) {
@@ -59,43 +59,27 @@ public class ProductController {
 		return responseEntity;
 	}
 
-	@PutMapping({ "/products", "" })
-	public ResponseEntity<?> updateProductHandler(@PathVariable("prodId") int id,@RequestBody Product product)throws  ProductWithTheIDDoesntExistException, ProductWithTheIDAlreadyExistsException{
+	@PutMapping({"/", "","/{prodId}" })
+	public ResponseEntity<?> updateProductHandler(@PathVariable("prodId") int id,@RequestBody Product product){
 		ResponseEntity<?> responseEntity;
-		try{
-			product.setId(id);
-			Product updatedProduct = productService.updateProduct(product);
-			responseEntity = new ResponseEntity<Product>(updatedProduct, HttpStatus.OK);	
-		}catch(ProductWithTheIDAlreadyExistsException e) {
-				responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-				responseEntity = new ResponseEntity<String>("Failed to update, Product ID already exists.", HttpStatus.ALREADY_REPORTED);
+		try {
+			Product updatedProduct = productService.getProductById(id).updateProduct(product);
+			responseEntity = new ResponseEntity<>(updatedProduct, HttpStatus.OK);
 		}catch(ProductWithTheIDDoesntExistException e){
-			responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-			responseEntity = new ResponseEntity<String>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);	
+			responseEntity = new ResponseEntity<>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);
 		}
 		return responseEntity;
 	}
 
-	@DeleteMapping("/products/{prodId}")
-	public ResponseEntity<?> deleteProductHandler(@PathVariable("prodId") int id)
-			throws ProductWithTheIDDoesntExistException {
+	@DeleteMapping("/{prodId}")
+	public ResponseEntity<?> deleteProductHandler(@PathVariable("prodId") int id) {
 				ResponseEntity<?> responseEntity;
 				try{
 					productService.deleteProduct(id);
-					responseEntity = new ResponseEntity<String>("Deleted",HttpStatus.OK);
+					responseEntity = new ResponseEntity<>("Deleted", HttpStatus.OK);
 				}catch(ProductWithTheIDDoesntExistException e){
-					responseEntity = new ResponseEntity<String>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);	
+					responseEntity = new ResponseEntity<>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);
 				}
 				return responseEntity;
-
 	}
-
-	//add and remove prod to cart
-	@DeleteMapping("/carts/{cartId}/{prodId}")
-	public void removeProductFromCartHandlEntity(@PathVariable("prodId")int id, int cartId) throws ProductWithTheIDDoesntExistException{
-           //Kristen still working this part
-	}
-
-
-
 }

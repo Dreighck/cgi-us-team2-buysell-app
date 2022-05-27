@@ -27,19 +27,19 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Cart getCartById(int id) {
-		return (cartRepo.findById(id).isPresent()) ? cartRepo.findById(id).get() : new Cart();
+	public Cart getCartById(int id) throws CartWithTheIDDoesntExistException {
+		if (cartRepo.findById(id).isPresent()) return cartRepo.findById(id).get();
+		else throw new CartWithTheIDDoesntExistException();
 	}
 	@Override
 	public Cart getCartByUserId(int userId) {
 		return cartRepo.getCartByUserId(userId);
 	}
 	@Override
-	public Cart createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException {
+	public void createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException {
 		if(cartRepo.existsById(cart.getCartNumber()))
 			throw new CartWithTheIDAlreadyExistsException();
 		else cartRepo.save(cart);
-		return cart;
 	}
 
 	@Override
@@ -62,7 +62,21 @@ public class CartServiceImpl implements CartService {
 		return sum;
 	}
 
-	
+	@Override
+	public Cart updateCart(Cart cart) throws CartWithTheIDDoesntExistException {
+		if (cartRepo.findById(cart.getCartNumber()).isPresent())
+			cartRepo.save(cart);
+		else throw new CartWithTheIDDoesntExistException();
+		return cart;
+	}
+
+	@Override
+	public void addProductToCart(int userId, Product product){
+		Cart cart = cartRepo.getCartByUserId(userId);
+		cart.addProduct(product);
+		cartRepo.save(cart);
+	}
+
 
 }
 

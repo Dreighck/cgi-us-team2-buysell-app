@@ -3,7 +3,9 @@ package com.cgi.commerceapp.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "product")
+import javax.annotation.processing.Generated;
+
+@Document
 public class Product {
   
 	@Id
@@ -12,6 +14,12 @@ public class Product {
     private String name;
     private double price;
     private String description;
+
+	public Product(int id, String name, double price) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+	}
 	public Product(int id, String name, double price, String description) {
 		this.id = id;
 		this.name = name;
@@ -58,6 +66,13 @@ public class Product {
 		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description + "]";
 	}
 
-    
+
+	public Product updateProduct(Product product) {
+		this.id= product.getId();
+		this.name=product.getName();
+		this.price= product.getPrice();
+		this.description= product.getDescription();
+		return this;
+	}
 }
 
