@@ -21,38 +21,38 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public List<Cart> getAllCart() {
-		// TODO Auto-generated method stub
+		
 		return cartRepo.findAll();
 	}
 
 	@Override
 	public Cart getCartById(int id) {
-		// TODO Auto-generated method stub
+		
 		return cartRepo.findById(id).get();
 	}
 
 	@Override
 	public Cart getCartByUserId(int userId) {
-		// TODO Auto-generated method stub
+		
 		return cartRepo.getCartByUserId(userId);
 	}
 
 	@Override
 	public Cart createNewCart(Cart cart) {
-		// TODO Auto-generated method stub
+		
 		cartRepo.save(cart);
 		return cart;
 	}
 
 	@Override
 	public void deleteCartById(int cartId) {
-		// TODO Auto-generated method stub
+		
 		cartRepo.delete(cartRepo.findById(cartId).get());
 	}
 
 	@Override
 	public double getCostofCartProducts(int id) {
-		// TODO Auto-generated method stub
+		
 		Cart cart = cartRepo.findById(id).get();
 		List<Product> list = cart.getProducts();
 		double sum = 0;

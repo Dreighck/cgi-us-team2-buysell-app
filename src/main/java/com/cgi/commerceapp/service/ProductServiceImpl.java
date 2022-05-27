@@ -48,11 +48,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void deleteProduct(int id) throws ProductWithTheIDDoesntExistException {
+    public Product deleteProduct(int id) throws ProductWithTheIDDoesntExistException {
         Optional<Product> optional = productRepo.findById(id);
         if (optional.isEmpty())
             throw new ProductWithTheIDDoesntExistException();
         productRepo.deleteById(id);
+        return null;
+        
     }
 
     @Override
@@ -68,7 +70,7 @@ public class ProductServiceImpl implements ProductService{
     //accessing prod repo and cart repo
 	@Override
 	public void removeProductFromCart(int productId, int cartId) throws ProductWithTheIDDoesntExistException {
-		// TODO Auto-generated method stub
+		
 //		get the cart from the repo
 //		reovmove the product from the cart's product list
 //		save the new cart back to the repo
@@ -83,7 +85,7 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public Product addProductToCart(int productId, int cartId) throws ProductWithTheIDAlreadyExistsException {
-        // TODO Auto-generated method stub
+        
 //		get the cart from the repo
 //		add the new product to the cart's product list
 //		save the cart back to the repo

@@ -1,5 +1,12 @@
 package com.cgi.commerceapp.controller;
 
+import java.util.List;
+
+import com.cgi.commerceapp.exceptions.cartWithTheIDAlreadyExistsException;
+import com.cgi.commerceapp.exceptions.cartWithTheIDDoesntExistException;
+import com.cgi.commerceapp.model.Cart;
+import com.cgi.commerceapp.service.CartService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
-import com.cgi.commerceapp.exceptions.cartWithTheIDAlreadyExistsException;
-import com.cgi.commerceapp.exceptions.cartWithTheIDDoesntExistException;
-import com.cgi.commerceapp.model.Cart;
-import com.cgi.commerceapp.service.CartService;
 
 @RestController
 @RequestMapping("/api/v1/cart")
@@ -46,15 +46,10 @@ public ResponseEntity<Cart> getcart(@PathVariable("cartId") int cartId)
 }
 
 @PostMapping({ "/carts", "" })
-public ResponseEntity<?> addcartHandler(@RequestBody Cart cart) {
+public ResponseEntity<?> addcartHandler(@RequestBody Cart cart) throws cartWithTheIDAlreadyExistsException{
    ResponseEntity<?> responseEntity;
-   try {
-      Cart prod = new Cart();
-      prod = cartService.addNewcart(cart);
-      responseEntity = new ResponseEntity<>(prod, HttpStatus.CREATED);
-   } catch (cartWithTheIDAlreadyExistsException e) {
-      responseEntity = new ResponseEntity<>("Failed to store, Duplicate", HttpStatus.CONFLICT);
-   }
+   cart = cartService.createNewCart(cart);
+   responseEntity = new ResponseEntity<>(cart, HttpStatus.CREATED);
    return responseEntity;
 }
 
