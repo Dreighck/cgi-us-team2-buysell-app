@@ -36,8 +36,7 @@ public ResponseEntity<List<Cart>> getAllCarts() {
 }
 
 @GetMapping(value = { "/carts/{cartId}" })
-public ResponseEntity<Cart> getCart(@PathVariable("cartId") int cartId)
-      throws CartWithTheIDDoesntExistException {
+public ResponseEntity<Cart> getCart(@PathVariable("cartId") int cartId) {
    Cart cart = cartService.getCartById(cartId);
    ResponseEntity<Cart> responseEntity;
    responseEntity = new ResponseEntity<>(cart, HttpStatus.OK);
