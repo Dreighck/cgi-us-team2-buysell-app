@@ -71,5 +71,12 @@ public class CartServiceImpl implements CartService {
 		return cart;
 	}
 
+	@Override
+	public void addProductToCart(int userId, Product product){
+		Cart cart = cartRepo.getCartByUserId(userId);
+		cart.addProduct(product);
+		cartRepo.save(cart);
+	}
+
 
 }

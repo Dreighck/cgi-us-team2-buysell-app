@@ -20,7 +20,10 @@ public class Cart {
 	}
 	
 	public Cart() {}
-	
+
+	public Cart(int cartNumber, int userId, boolean no) {
+	}
+
 	public int getCartNumber() {
 		return cartNumber;
 	}
@@ -45,8 +48,7 @@ public class Cart {
 	public String toString() {
 		return "Cart [cartNumber=" + cartNumber + ", userId=" + userId + ", products=" + products + "]";
 	}
-
-
+	
 	public Cart updateCart(Cart cart) {
 		this.cartNumber = cart.getCartNumber();
 		this.products = cart.getProducts();

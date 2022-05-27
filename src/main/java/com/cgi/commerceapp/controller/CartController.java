@@ -20,14 +20,14 @@ import com.cgi.commerceapp.model.Cart;
 import com.cgi.commerceapp.service.CartService;
 
 @RestController
-@RequestMapping("/api/v1/cart")
+@RequestMapping("/api/v1")
 public class CartController {
 
    @Autowired
    CartService cartService;
 
 
-@GetMapping("/cart")
+@GetMapping({"/carts"})
 public ResponseEntity<List<Cart>> getAllCarts() {
    List<Cart> carts = cartService.getAllCart();
    ResponseEntity<List<Cart>> responseEntity;
