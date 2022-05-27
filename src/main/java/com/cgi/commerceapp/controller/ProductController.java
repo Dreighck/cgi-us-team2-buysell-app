@@ -27,6 +27,7 @@ public class ProductController {
 
 	@Autowired
 	ProductService productService;
+	private Product deletedProduct;
 
 	@GetMapping("/products")
 	public ResponseEntity<List<Product>> getAllProduct() {
@@ -59,16 +60,42 @@ public class ProductController {
 	}
 
 	@PutMapping({ "/products", "" })
-	public ResponseEntity<Product> updateProductHandler(@RequestBody Product product)
-			throws ProductWithTheIDDoesntExistException, ProductWithTheIDAlreadyExistsException {
-		return null;
+	public ResponseEntity<?> updateProductHandler(@PathVariable("prodId") int id,@RequestBody Product product)throws  ProductWithTheIDDoesntExistException, ProductWithTheIDAlreadyExistsException{
+		ResponseEntity<?> responseEntity;
+		try{
+			product.setId(id);
+			Product updatedProduct = productService.updateProduct(product);
+			responseEntity = new ResponseEntity<Product>(updatedProduct, HttpStatus.OK);	
+		}catch(ProductWithTheIDAlreadyExistsException e) {
+				responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+				responseEntity = new ResponseEntity<String>("Failed to update, Product ID already exists.", HttpStatus.ALREADY_REPORTED);
+		}catch(ProductWithTheIDDoesntExistException e){
+			responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+			responseEntity = new ResponseEntity<String>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);	
+		}
+		return responseEntity;
 	}
 
 	@DeleteMapping("/products/{prodId}")
 	public ResponseEntity<?> deleteProductHandler(@PathVariable("prodId") int id)
 			throws ProductWithTheIDDoesntExistException {
+				ResponseEntity<?> responseEntity;
+				try{
+					deletedProduct = productService.deleteProduct(id);
+					responseEntity = new ResponseEntity<Product>(deletedProduct,HttpStatus.OK);	
+				}catch(ProductWithTheIDDoesntExistException e){
+					responseEntity = new ResponseEntity<String>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);	
+				}
+				return responseEntity;
 
-		return null;
 	}
+
+	//add and remove prod to cart
+	@DeleteMapping("/carts/{cartId}/{prodId}")
+	public void removeProductFromCartHandlEntity(@PathVariable("prodId")int id, int cartId) throws ProductWithTheIDDoesntExistException{
+           //Kristen still working this part
+	}
+
+
 
 }
