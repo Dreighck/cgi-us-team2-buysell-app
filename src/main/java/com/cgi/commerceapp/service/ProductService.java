@@ -18,7 +18,7 @@ public interface ProductService {
     List<Product> getAllProducts();
     Product getProductById(int id) throws ProductWithTheIDDoesntExistException;
     Product addNewProduct(Product product) throws ProductWithTheIDAlreadyExistsException;
-    void deleteProduct(int id) throws ProductWithTheIDDoesntExistException;
+    Product deleteProduct(int id) throws ProductWithTheIDDoesntExistException;
     Product updateProduct(Product product) throws ProductWithTheIDAlreadyExistsException, ProductWithTheIDDoesntExistException;
     void removeProductFromCart(int productId, int cartId) throws ProductWithTheIDDoesntExistException, CartWithTheIDDoesntExistException;
     void addProductToCart(int productId, int cartId) throws ProductWithTheIDAlreadyExistsException, IOException, ProductWithTheIDDoesntExistException, CartWithTheIDDoesntExistException;
