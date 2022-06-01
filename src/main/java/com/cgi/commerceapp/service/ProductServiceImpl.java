@@ -64,20 +64,21 @@ public class ProductServiceImpl implements ProductService {
         throw new ProductWithTheIDDoesntExistException();
     }
 
-    @Override
-    public void removeProductFromCart(int productId, int cartId)
-            throws ProductWithTheIDDoesntExistException, CartWithTheIDDoesntExistException {
-        Product product;
-        Cart cart;
-        if (productRepo.findById(productId).isPresent())
-            product = productRepo.findById(productId).get();
-        else throw new ProductWithTheIDDoesntExistException();
-        if (cartRepo.findById(cartId).isPresent()) {
-            cart = cartRepo.findById(cartId).get();
-            cart.removeProduct(product);
-        } else throw new CartWithTheIDDoesntExistException();
-        cartRepo.save(cart);
-    }
+//    @Override
+//    public void removeProductFromCart(int productId, int cartId)
+//            throws ProductWithTheIDDoesntExistException, CartWithTheIDDoesntExistException {
+//        Product product;
+//        Cart cart;
+//        if (productRepo.findById(productId).isPresent())
+//            product = productRepo.findById(productId).get();
+//        else throw new ProductWithTheIDDoesntExistException();
+//        if (cartRepo.findById(cartId).isPresent()) {
+//            cart = cartRepo.findById(cartId).get();
+//            cart.removeProduct(product);
+//        } else throw new CartWithTheIDDoesntExistException();
+//        cartRepo.save(cart);
+//    }
+
 //    List<Product> list = cart.getProducts();
 //        list.remove(product);
 //        cart.setProducts(list);

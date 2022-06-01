@@ -30,6 +30,7 @@ public class CommerceAppApplication {
     @Bean
         CommandLineRunner runner(ProductService productService,CartService cartService){
         return args -> {
+            Product test = new Product();
             productRepo.deleteAll();
             productService.addNewProduct(new Product( 1,"TV Set", 300.00, "Samsung TV",
                     "GREEEEEEEEEAAAAATTTTT condition, only issue is that all audio is dubbed by Tony the Tiger"));
@@ -40,7 +41,11 @@ public class CommerceAppApplication {
             productService.addNewProduct(new Product(6, "Phone", 5000.03, "iPhone", "24 XS Pro Max"));
             productService.addNewProduct(new Product(7, "Watch", 30.00));
             cartRepo.deleteAll();
-            cartService.createNewCart(new Cart(1,null));
+            cartService.createNewCart(new Cart(1, new ArrayList<>()));
+            cartService.addProductToCart(1, new Product(7, "Watch", 30.00, "ikea", ""));
+            cartService.addProductToCart(1, new Product(6, "Phone", 5000.03, "iPhone", "24 XS Pro Max"));
+            cartService.addProductToCart(1,test);
+            cartService.removeProductFromCart(1, test);
         };
 
     }

@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import com.cgi.commerceapp.exceptions.CartWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.exceptions.CartWithTheIDDoesntExistException;
-import com.cgi.commerceapp.exceptions.ProductWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +32,7 @@ public class CartServiceImpl implements CartService {
 		if (cartRepo.findById(id).isPresent()) return cartRepo.findById(id).get();
 		else throw new CartWithTheIDDoesntExistException();
 	}
+
 //	@Override
 //	public Cart getCartByUserId(int userId) {
 //		return cartRepo.getCartByUserId(userId);
