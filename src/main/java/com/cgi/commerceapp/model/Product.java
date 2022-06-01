@@ -10,24 +10,41 @@ public class Product {
   
 	@Id
     private int id;
-
     private String name;
     private double price;
+	private String brand;
     private String description;
 
+	public Product() {}
 	public Product(int id, String name, double price) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 	}
-	public Product(int id, String name, double price, String description) {
+	public Product(int id, String name, double price, String brand) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.brand = brand;
+	}
+
+	public Product(int id, String name, double price, String brand, String description) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.brand = brand;
 		this.description = description;
 	}
 
-	public Product() {}
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+
 
 	public int getId() {
 		return id;

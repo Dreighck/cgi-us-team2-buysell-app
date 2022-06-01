@@ -58,9 +58,21 @@ public class ProductController {
 		return responseEntity;
 	}
 
-	@PutMapping({"/", "","/{prodId}" })
-	public ResponseEntity<?> updateProductHandler(@PathVariable("prodId") int id,@RequestBody Product product){
+	@PutMapping({"/{prodId}" })
+	public ResponseEntity<?> updateProductHandler(@PathVariable("prodId") int id, @RequestBody Product product){
 		ResponseEntity<?> responseEntity;
+		try {
+			Product updatedProduct = productService.getProductById(id).updateProduct(product);
+			responseEntity = new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+		}catch(ProductWithTheIDDoesntExistException e){
+			responseEntity = new ResponseEntity<>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);
+		}
+		return responseEntity;
+	}
+	@PutMapping({"/", "" })
+	public ResponseEntity<?> updateProductHandler(@RequestBody Product product){
+		ResponseEntity<?> responseEntity;
+		int id = product.getId();
 		try {
 			Product updatedProduct = productService.getProductById(id).updateProduct(product);
 			responseEntity = new ResponseEntity<>(updatedProduct, HttpStatus.OK);

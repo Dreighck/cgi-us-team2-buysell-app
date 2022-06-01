@@ -18,7 +18,7 @@ import com.cgi.commerceapp.service.CartService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1/carts")
+@RequestMapping("/api/v1/cart")
 public class CartController {
 
    @Autowired
@@ -46,7 +46,7 @@ public ResponseEntity<?> getCart(@PathVariable("cartId") int cartId) {
    return responseEntity;
 }
 
-@PostMapping({"/", "" })
+@PostMapping({"/", "","/{cartId}" })
 public ResponseEntity<?> addCartHandler(@RequestBody Cart cart)  {
    ResponseEntity<?> responseEntity;
    try{
