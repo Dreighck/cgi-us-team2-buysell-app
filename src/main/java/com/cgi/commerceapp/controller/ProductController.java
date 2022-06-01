@@ -93,4 +93,16 @@ public class ProductController {
 				}
 				return responseEntity;
 	}
+	@DeleteMapping({"/",""})
+	public ResponseEntity<?> deleteProductHandler(@RequestBody Product product) {
+		ResponseEntity<?> responseEntity;
+		int id = product.getId();
+		try{
+			productService.deleteProduct(id);
+			responseEntity = new ResponseEntity<>("Deleted", HttpStatus.OK);
+		}catch(ProductWithTheIDDoesntExistException e){
+			responseEntity = new ResponseEntity<>("Failed to update, Product ID does not exist.", HttpStatus.NOT_FOUND);
+		}
+		return responseEntity;
+	}
 }
