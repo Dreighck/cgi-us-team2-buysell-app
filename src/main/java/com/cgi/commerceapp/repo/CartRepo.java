@@ -2,6 +2,7 @@ package com.cgi.commerceapp.repo;
 
 
 
+import com.cgi.commerceapp.model.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,5 @@ public interface CartRepo extends MongoRepository<Cart, Integer>{
     //
 
 
-    Cart getCartByUserId(int id);
+//    Cart getCartByUserId(int id);
 }

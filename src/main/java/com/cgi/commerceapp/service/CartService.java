@@ -17,12 +17,14 @@ public interface CartService {
 
    List<Cart> getAllCart();
    Cart getCartById(int id) throws CartWithTheIDDoesntExistException;
-   Cart getCartByUserId(int userId);
-   void createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException;
+//   Cart getCartByUserId(int userId);
+   Cart createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException;
    void deleteCartById(int cartId) throws CartWithTheIDDoesntExistException;
    double getCostOfCartProducts(int id) throws CartWithTheIDDoesntExistException;
 
    Cart updateCart(Cart cart) throws CartWithTheIDDoesntExistException;
 
-    void addProductToCart(int userId, Product product);
+    Cart addProductToCart(int userId, Product product);
+
+    void removeProductFromCart(int userId, Product product);
 }

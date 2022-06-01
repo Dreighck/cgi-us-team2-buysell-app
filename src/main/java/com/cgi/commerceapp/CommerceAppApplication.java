@@ -31,15 +31,16 @@ public class CommerceAppApplication {
         CommandLineRunner runner(ProductService productService,CartService cartService){
         return args -> {
             productRepo.deleteAll();
-            productService.addNewProduct(new Product( 1,"TV Set", 300.00, "Samsung"));
+            productService.addNewProduct(new Product( 1,"TV Set", 300.00, "Samsung TV",
+                    "GREEEEEEEEEAAAAATTTTT condition, only issue is that all audio is dubbed by Tony the Tiger"));
             productService.addNewProduct(new Product(2,"Game Console", 200.00));
             productService.addNewProduct(new Product(3, "Sofa", 100.00));
-            productService.addNewProduct(new Product(4, "Icecream", 5.00));
+            productService.addNewProduct(new Product(4, "Icecream", 5.00, "bordens"));
             productService.addNewProduct(new Product(5, "Beer", 3.00));
-            productService.addNewProduct(new Product(6, "Phone", 500.00, "iPhone"));
+            productService.addNewProduct(new Product(6, "Phone", 5000.03, "iPhone", "24 XS Pro Max"));
             productService.addNewProduct(new Product(7, "Watch", 30.00));
             cartRepo.deleteAll();
-            cartService.createNewCart(new Cart());
+            cartService.createNewCart(new Cart(1,null));
         };
 
     }

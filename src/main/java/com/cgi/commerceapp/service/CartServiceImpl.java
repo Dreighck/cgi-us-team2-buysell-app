@@ -1,9 +1,11 @@
 package com.cgi.commerceapp.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.cgi.commerceapp.exceptions.CartWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.exceptions.CartWithTheIDDoesntExistException;
+import com.cgi.commerceapp.exceptions.ProductWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,16 +33,19 @@ public class CartServiceImpl implements CartService {
 		if (cartRepo.findById(id).isPresent()) return cartRepo.findById(id).get();
 		else throw new CartWithTheIDDoesntExistException();
 	}
+//	@Override
+//	public Cart getCartByUserId(int userId) {
+//		return cartRepo.getCartByUserId(userId);
+//	}
 	@Override
-	public Cart getCartByUserId(int userId) {
-		return cartRepo.getCartByUserId(userId);
+	public Cart createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException {
+		Optional<Cart> optional = cartRepo.findById(cart.getCartNumber());
+		if (optional.isEmpty()) {
+			return cartRepo.save(cart);
+		}
+		throw new CartWithTheIDAlreadyExistsException();
 	}
-	@Override
-	public void createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException {
-		if(cartRepo.existsById(cart.getCartNumber()))
-			throw new CartWithTheIDAlreadyExistsException();
-		else cartRepo.save(cart);
-	}
+
 
 	@Override
 	public void deleteCartById(int cartId) throws CartWithTheIDDoesntExistException {
@@ -71,12 +76,17 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public void addProductToCart(int userId, Product product){
-		Cart cart = cartRepo.getCartByUserId(userId);
+	public Cart addProductToCart(int cartNumber, Product product){
+		Cart cart = cartRepo.findById(cartNumber).get();
 		cart.addProduct(product);
+		return cartRepo.save(cart);
+	}
+	@Override
+	public void removeProductFromCart(int cartNumber, Product product){
+		Cart cart = cartRepo.findById(cartNumber).get();
+		cart.removeProduct(product);
 		cartRepo.save(cart);
 	}
-
 
 }
 
