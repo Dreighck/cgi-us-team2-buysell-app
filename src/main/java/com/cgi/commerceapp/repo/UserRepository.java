@@ -1,14 +1,18 @@
 package com.cgi.commerceapp.repo;
 
+import com.cgi.commerceapp.model.User;
 
-
-import com.cgi.commerceapp.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @Repository
 @Transactional
-public interface TransactionRepo extends JpaRepository<Product,Integer> {
+public interface UserRepository extends JpaRepository<User, String> {
+
+    Optional<User> findByUsernameAndPassword(String username, String password);
+   
 }
