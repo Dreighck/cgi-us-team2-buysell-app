@@ -40,7 +40,7 @@ public class CommerceAppApplication {
             productService.addNewProduct(new Product(6, "Phone", 5000.03, "iPhone", "24 XS Pro Max"));
             productService.addNewProduct(new Product(7, "Watch", 30.00));
             cartRepo.deleteAll();
-            cartService.createNewCart(new Cart());
+            cartService.createNewCart(new Cart(1,null));
         };
 
     }

@@ -46,7 +46,7 @@ public ResponseEntity<?> getCart(@PathVariable("cartId") int cartId) {
    return responseEntity;
 }
 
-@PostMapping({"/", "","/{cartId}" })
+@PostMapping({"/", "" })
 public ResponseEntity<?> addCartHandler(@RequestBody Cart cart)  {
    ResponseEntity<?> responseEntity;
    try{
@@ -57,19 +57,24 @@ public ResponseEntity<?> addCartHandler(@RequestBody Cart cart)  {
    }
    return responseEntity;
 }
-
-@PutMapping({"/{cartId}"})
-public ResponseEntity<?> updateCartHandler(@RequestBody Cart cart,@PathVariable("cartId") int id) {
-   ResponseEntity<?> responseEntity;
-   Cart updatedCart;
-   try{
-      updatedCart = cartService.getCartById(id).updateCart(cart);
-      responseEntity = new ResponseEntity<> (updatedCart, HttpStatus.ACCEPTED);
-   } catch (CartWithTheIDDoesntExistException e){
-      responseEntity = new ResponseEntity<>("Cart doesn't exist",HttpStatus.NOT_ACCEPTABLE);
-   }
-   return responseEntity;
+@PutMapping("/{cartId}")
+public ResponseEntity<?> addProductToCartHandler(@PathVariable("cartId") int id,@RequestBody Product product) {
+   cartService.addProductToCart(id,product);
+   return new ResponseEntity<>("Cart updated",HttpStatus.ACCEPTED);
 }
+
+//@PutMapping({"/{cartId}"})
+//public ResponseEntity<?> updateCartHandler(@RequestBody Cart cart,@PathVariable("cartId") int id) {
+//   ResponseEntity<?> responseEntity;
+//   Cart updatedCart;
+//   try{
+//      updatedCart = cartService.getCartById(id).updateCart(cart);
+//      responseEntity = new ResponseEntity<> (updatedCart, HttpStatus.ACCEPTED);
+//   } catch (CartWithTheIDDoesntExistException e){
+//      responseEntity = new ResponseEntity<>("Cart doesn't exist",HttpStatus.NOT_ACCEPTABLE);
+//   }
+//   return responseEntity;
+//}
 
 @DeleteMapping("/{cartId}")
 public ResponseEntity<?> deleteCartHandler(@PathVariable("cartId") int id)
