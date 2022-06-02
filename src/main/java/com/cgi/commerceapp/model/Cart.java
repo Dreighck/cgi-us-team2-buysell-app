@@ -7,6 +7,7 @@ import com.cgi.commerceapp.exceptions.ProductWithTheIDDoesntExistException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
 @Document
 public class Cart {
   
@@ -16,6 +17,7 @@ public class Cart {
 
 	public Cart(int cartNumber, List<Product> products) {
 		this.cartNumber = cartNumber;
+
 		this.products = products;
 	}
 	
