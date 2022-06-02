@@ -28,7 +28,7 @@ public class UserController {
 
         ResponseEntity<List<User>> responseEntity;
         List<User> users = userService.getAllUsers();
-        responseEntity = new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        responseEntity = new ResponseEntity<>(users, HttpStatus.OK);
         return responseEntity;
     }
 
@@ -38,13 +38,11 @@ public class UserController {
         ResponseEntity<?> responseEntity;
         try {
             User newUser = userService.addNewUser(user);
-            responseEntity = new ResponseEntity<User>(newUser,HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<>(newUser,HttpStatus.CREATED);
         }catch(UserAccountWithTheIDAlreadyPresentException e) {
-            responseEntity = new ResponseEntity<String>("Failed to store the user: Duplicate Resource",HttpStatus.CONFLICT);
+            responseEntity = new ResponseEntity<>("Failed to store the user: Duplicate Resource",HttpStatus.CONFLICT);
         }
-
         return responseEntity;
-
     }
 
     @GetMapping("/users/{userId}")
@@ -54,9 +52,9 @@ public class UserController {
 
         try {
             User user = userService.getUserById(id);
-            responseEntity = new ResponseEntity<User>(user,HttpStatus.OK);
+            responseEntity = new ResponseEntity<>(user,HttpStatus.OK);
         }catch(UserAccountWithTheIDDoesntExistException e) {
-            responseEntity = new ResponseEntity<String>("User with the ID not found",HttpStatus.NOT_FOUND);
+            responseEntity = new ResponseEntity<>("User with the ID not found",HttpStatus.NOT_FOUND);
         }
 
         return responseEntity;
@@ -78,12 +76,12 @@ public class UserController {
         	// 
         	String token = userService.generateToken(user);
         	tokenMap.put("token", token);
-        	responseEntity = new ResponseEntity<Map<String, String>>(tokenMap,HttpStatus.OK);
+        	responseEntity = new ResponseEntity<>(tokenMap,HttpStatus.OK);
     	} catch(UserAccountWithTheIDDoesntExistException e) {
-    	tokenMap.clear();
-    	tokenMap.put("token", null);
-    	tokenMap.put("message", "Invalid User Credentials");
-    	responseEntity = new ResponseEntity<Map<String,String>>(tokenMap,HttpStatus.FORBIDDEN);
+//    	    tokenMap.clear();
+    	    tokenMap.put("token", null);
+    	    tokenMap.put("message", "Invalid User Credentials");
+    	    responseEntity = new ResponseEntity<>(tokenMap,HttpStatus.FORBIDDEN);
     	}
 
     	return responseEntity;
@@ -97,7 +95,7 @@ public class UserController {
 		
 		ResponseEntity<Map<String, Object>> responseEntity;
 		HashMap<String, Object> map = new HashMap<>();
-		map.clear();
+//		map.clear();
 		System.out.println(authHeader);
 		String token = authHeader.split(" ")[1];
 		try {
@@ -107,11 +105,11 @@ public class UserController {
 			.getBody();
 			map.put("isAuthenticated", true);
 			map.put("userId", claims.getSubject());
-			responseEntity = new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
+			responseEntity = new ResponseEntity<>(map,HttpStatus.OK);
 			
 		}catch(Exception e) {
 			map.put("isAuthenticated", false);
-			responseEntity = new ResponseEntity<Map<String,Object>>(map,HttpStatus.FORBIDDEN);
+			responseEntity = new ResponseEntity<>(map,HttpStatus.FORBIDDEN);
 		}
 		
 		return responseEntity;
@@ -120,25 +118,26 @@ public class UserController {
 
 
     @DeleteMapping("/users/delete/{userId}")
-    public ResponseEntity<String> deleteUserAccountHandler(@PathVariable("userId") String id )throws UserAccountWithTheIDDoesntExistException{
+    public ResponseEntity<String> deleteUserAccountHandler(@PathVariable("userId") String id )
+    {
         ResponseEntity<String> responseEntity;
         try {
             userService.deleteUser(id);
-            responseEntity = new ResponseEntity<String>("User Account Deleted", HttpStatus.NO_CONTENT);
+            responseEntity = new ResponseEntity<>("User Account Deleted", HttpStatus.NO_CONTENT);
         }catch (UserAccountWithTheIDDoesntExistException e){
-            responseEntity = new ResponseEntity<String>("User Account with ID not found", HttpStatus.NOT_FOUND);
+            responseEntity = new ResponseEntity<>("User Account with ID not found", HttpStatus.NOT_FOUND);
         }
         return responseEntity;
     }
 
     @PutMapping("/users/update/{userId}")
-    public ResponseEntity<?> updateUserHandler(@PathVariable("userId") String id) throws UserAccountWithTheIDDoesntExistException{
+    public ResponseEntity<?> updateUserHandler(@PathVariable("userId") String id) {
         ResponseEntity<?> responseEntity;
         try {
             User user = userService.updateUser(userService.getUserById(id));
-            responseEntity = new ResponseEntity<User>(user, HttpStatus.OK);
+            responseEntity = new ResponseEntity<>(user, HttpStatus.OK);
         }catch (UserAccountWithTheIDDoesntExistException e){
-            responseEntity = new ResponseEntity<String>("User Account with ID not found", HttpStatus.NOT_FOUND);
+            responseEntity = new ResponseEntity<>("User Account with ID not found", HttpStatus.NOT_FOUND);
         }
         return responseEntity;
     }
