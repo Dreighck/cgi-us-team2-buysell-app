@@ -15,15 +15,17 @@ public class User {
     private String email;
     
     private String password;
+	private int accountNumber;
     public User() {
 
     }
-    public User(String name, String email, String username, String password) {
+    public User(String name, String email, String username, String password, int accountNumber) {
         
         this.name = name;
         this.email = email;
         this.username = username;
         this.password = password;
+		this.accountNumber=accountNumber;
     }
     
 	public String getName() {
@@ -50,8 +52,12 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 
+	public int getAccountNumber() {
+		return accountNumber;
+	}
 
-
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 }
