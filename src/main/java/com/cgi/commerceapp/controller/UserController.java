@@ -68,17 +68,14 @@ public class UserController {
     	ResponseEntity<?> responseEntity;
 
     	Map<String, String> tokenMap = new HashMap<>();
-
     	try {
         	User user = userService.verifyUser(loginUser.getUsername(),loginUser.getPassword());
-
-            
         	// 
         	String token = userService.generateToken(user);
         	tokenMap.put("token", token);
         	responseEntity = new ResponseEntity<>(tokenMap,HttpStatus.OK);
     	} catch(UserAccountWithTheIDDoesntExistException e) {
-//    	    tokenMap.clear();
+    	    tokenMap.clear();
     	    tokenMap.put("token", null);
     	    tokenMap.put("message", "Invalid User Credentials");
     	    responseEntity = new ResponseEntity<>(tokenMap,HttpStatus.FORBIDDEN);
@@ -95,7 +92,7 @@ public class UserController {
 		
 		ResponseEntity<Map<String, Object>> responseEntity;
 		HashMap<String, Object> map = new HashMap<>();
-//		map.clear();
+		map.clear();
 		System.out.println(authHeader);
 		String token = authHeader.split(" ")[1];
 		try {
