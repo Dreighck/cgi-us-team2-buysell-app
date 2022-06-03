@@ -1,11 +1,15 @@
 package com.cgi.commerceapp.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
+//@Entity
+
+@Document
 @Table(name = "buysell_user")
 public class User {
     @Id
