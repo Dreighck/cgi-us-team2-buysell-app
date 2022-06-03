@@ -32,19 +32,19 @@ public class CommerceAppApplication {
             Product test = new Product();
             productRepo.deleteAll();
             productService.addNewProduct(new Product( 1,"TV Set", 300.00, "Samsung TV",
-                    "GREEEEEEEEEAAAAATTTTT condition, only issue is that all audio is dubbed by Tony the Tiger"));
+                    "Good condition","https://www.bing.com/th?id=ORMS.6258cb990fd91b9d5b471bd1cf5d8c3a&pid=Wdp&w=300&h=225&qlt=90&c=1&rs=1&dpr=1&p=0"));
             productService.addNewProduct(new Product(2,"Game Console", 200.00));
             productService.addNewProduct(new Product(3, "Sofa", 100.00));
             productService.addNewProduct(new Product(4, "Icecream", 5.00, "bordens"));
             productService.addNewProduct(new Product(5, "Beer", 3.00));
             productService.addNewProduct(new Product(6, "Phone", 5000.03, "iPhone", "24 XS Pro Max"));
             productService.addNewProduct(new Product(7, "Watch", 30.00));
-            cartRepo.deleteAll();
-            cartService.createNewCart(new Cart(1, new ArrayList<>()));
-            cartService.addProductToCart(1, new Product(7, "Watch", 30.00, "ikea", ""));
-            cartService.addProductToCart(1, new Product(6, "Phone", 5000.03, "iPhone", "24 XS Pro Max"));
-            cartService.addProductToCart(1,test);
-            cartService.removeProductFromCart(1, test);
+//            cartRepo.deleteAll();
+//            cartService.createNewCart(new Cart("1", new ArrayList<>()));
+//            cartService.addProductToCart("1", new Product(7, "Watch", 30.00, "ikea", ""));
+//            cartService.addProductToCart("1", new Product(6, "Phone", 5000.03, "iPhone", "24 XS Pro Max"));
+//            cartService.addProductToCart("1",test);
+//            cartService.removeProductFromCart("1", test);
         };
 
     }

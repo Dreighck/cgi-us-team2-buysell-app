@@ -8,11 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import com.cgi.commerceapp.model.Cart;
 
+import java.util.Optional;
+
 @Repository
-public interface CartRepo extends MongoRepository<Cart, Integer>{
+public interface CartRepo extends MongoRepository<Cart, String>{
 //    Cart findByItemNumber(Long itemNumber);
     //
 
 
-//    Cart getCartByUserId(int id);
+   Optional<Cart> findCartByCartNumber(int id);
+
 }

@@ -17,17 +17,19 @@ public interface CartService {
 
    List<Cart> getAllCart();
    Cart getCartById(int id) throws CartWithTheIDDoesntExistException;
+   Cart getCartById(String id) throws CartWithTheIDDoesntExistException;
 
 //    Cart getCartByUserId(int userId);
 
     //   Cart getCartByUserId(int userId);
    Cart createNewCart(Cart cart) throws CartWithTheIDAlreadyExistsException;
-   void deleteCartById(int cartId) throws CartWithTheIDDoesntExistException;
+    Cart createNewCart(String cartId) throws CartWithTheIDAlreadyExistsException;
+   void deleteCartById(String cartId) throws CartWithTheIDDoesntExistException;
    double getCostOfCartProducts(int id) throws CartWithTheIDDoesntExistException;
 
    Cart updateCart(Cart cart) throws CartWithTheIDDoesntExistException;
 
-    Cart addProductToCart(int cartId, Product product);
+    Cart addProductToCart(String cartId, Product product);
 
-    void removeProductFromCart(int cartId, Product product);
+    void removeProductFromCart(String cartId, Product product);
 }

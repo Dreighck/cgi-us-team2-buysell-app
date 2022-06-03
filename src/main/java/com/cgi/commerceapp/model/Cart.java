@@ -12,26 +12,26 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Cart {
   
 	@Id
-	private int cartNumber;
+	private String cartId;
 	private List<Product> products = new ArrayList<>();
 
-	public Cart(int cartNumber, List<Product> products) {
-		this.cartNumber = cartNumber;
+	public Cart(String cartId, List<Product> products) {
+		this.cartId = cartId;
 
 		this.products = products;
 	}
 	
 	public Cart() {}
 
-	public Cart(int cartNumber) {
-		this.cartNumber = cartNumber;
+	public Cart(String cartId) {
+		this.cartId = cartId;
 	}
 
-	public int getCartNumber() {
-		return cartNumber;
+	public String getCartId() {
+		return cartId;
 	}
-	public void setCartNumber(int cartNumber) {
-		this.cartNumber = cartNumber;
+	public void setCartNumber(String cartId) {
+		this.cartId = cartId;
 	}
 //	public int getUserId() {
 //		return userId;
@@ -64,11 +64,11 @@ public class Cart {
 	}
 	@Override
 	public String toString() {
-		return "Cart [cartNumber=" + cartNumber + /*", userId=" + userId + */", products=" + products + "]";
+		return "Cart [cartNumber=" + cartId + /*", userId=" + userId + */", products=" + products + "]";
 	}
 	
 	public Cart updateCart(Cart cart) {
-		this.cartNumber = cart.getCartNumber();
+		this.cartId = cart.getCartId();
 		this.products = cart.getProducts();
 //		this.userId = cart.getUserId();
 		return this;

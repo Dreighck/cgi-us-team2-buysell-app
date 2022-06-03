@@ -93,8 +93,8 @@ public class ProductServiceImpl implements ProductService {
         if (productRepo.findById(productId).isPresent())
             product = productRepo.findById(productId).get();
         else throw new ProductWithTheIDDoesntExistException();
-        if (cartRepo.findById(cartId).isPresent())
-            cart = cartRepo.findById(cartId).get();
+        if (cartRepo.findCartByCartNumber(cartId).isPresent())
+            cart = cartRepo.findCartByCartNumber(cartId).get();
         else throw new CartWithTheIDDoesntExistException();
         List<Product> products = cart.getProducts();
         for (Product prod : products) {
