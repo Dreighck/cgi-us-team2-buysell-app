@@ -51,15 +51,16 @@ public class UserController {
         ResponseEntity<?> responseEntity;
 
         try {
-            User user = userService.getUserById(id);
+            User user = userService.findByUsername(id);
             responseEntity = new ResponseEntity<>(user,HttpStatus.OK);
         }catch(UserAccountWithTheIDDoesntExistException e) {
             responseEntity = new ResponseEntity<>("User with the ID not found",HttpStatus.NOT_FOUND);
         }
 
         return responseEntity;
-
     }
+
+
 
  
     @PostMapping("/users/login")
@@ -119,6 +120,7 @@ public class UserController {
     {
         ResponseEntity<String> responseEntity;
         try {
+            userService.findByUsername(id);
             userService.deleteUser(id);
             responseEntity = new ResponseEntity<>("User Account Deleted", HttpStatus.NO_CONTENT);
         }catch (UserAccountWithTheIDDoesntExistException e){
@@ -131,7 +133,7 @@ public class UserController {
     public ResponseEntity<?> updateUserHandler(@PathVariable("userId") String id) {
         ResponseEntity<?> responseEntity;
         try {
-            User user = userService.updateUser(userService.getUserById(id));
+            User user = userService.updateUser(userService.findByUsername(id));
             responseEntity = new ResponseEntity<>(user, HttpStatus.OK);
         }catch (UserAccountWithTheIDDoesntExistException e){
             responseEntity = new ResponseEntity<>("User Account with ID not found", HttpStatus.NOT_FOUND);

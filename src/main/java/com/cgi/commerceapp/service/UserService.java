@@ -10,7 +10,9 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User getUserById(String id) throws UserAccountWithTheIDDoesntExistException;
+//    User getUserById(String id) throws UserAccountWithTheIDDoesntExistException;
+
+    User findByUsername(String username) throws UserAccountWithTheIDDoesntExistException;
 
     User addNewUser(User user) throws UserAccountWithTheIDAlreadyPresentException;
 
@@ -19,5 +21,7 @@ public interface UserService {
     User updateUser(User user) throws UserAccountWithTheIDDoesntExistException;
     User verifyUser(String username, String password) throws UserAccountWithTheIDDoesntExistException;
     String generateToken(User user);
+
+//    User findByAccountNumber(int id) throws UserAccountWithTheIDDoesntExistException;
 
 }

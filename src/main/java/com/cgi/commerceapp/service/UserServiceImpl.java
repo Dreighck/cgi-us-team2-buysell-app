@@ -23,18 +23,28 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+//    @Override
+//    public User getUserById(String id) throws UserAccountWithTheIDDoesntExistException {
+//        Optional<User> optional = userRepository.findById(id);
+//        if(optional.isPresent()) {
+//            return optional.get();
+//        }
+//        throw new UserAccountWithTheIDDoesntExistException();
+//    }
+
     @Override
-    public User getUserById(String id) throws UserAccountWithTheIDDoesntExistException {
-        Optional<User> optional = userRepository.findById(id);
+    public User findByUsername(String username) throws UserAccountWithTheIDDoesntExistException {
+        Optional<User> optional = userRepository.findByUsername(username);
         if(optional.isPresent()) {
             return optional.get();
         }
         throw new UserAccountWithTheIDDoesntExistException();
     }
 
+
     @Override
     public User addNewUser(User user) throws UserAccountWithTheIDAlreadyPresentException {
-        Optional<User> optional = userRepository.findById(user.getUsername());
+        Optional<User> optional = userRepository.findByUsername(user.getUsername());
 
         if(optional.isEmpty()) {
             userRepository.save(user);
@@ -45,19 +55,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String id) throws UserAccountWithTheIDDoesntExistException {
-        Optional<User> optional = userRepository.findById(id);
+        Optional<User> optional = userRepository.findByUsername(id);
         if (optional.isPresent()){
-            optional.get();
+            userRepository.deleteUserByUsername(id);
         }
         throw new UserAccountWithTheIDDoesntExistException();
     }
 
     @Override
     public User updateUser(User user) throws UserAccountWithTheIDDoesntExistException {
-        Optional<User> userOptional = userRepository.findById(user.getUsername());
+        Optional<User> userOptional = userRepository.findByUsername(user.getUsername());
         if (userOptional.isPresent()){
            userRepository.save(user);
-          
+
             return userOptional.get();
         }
         throw new UserAccountWithTheIDDoesntExistException();
@@ -83,7 +93,16 @@ public class UserServiceImpl implements UserService {
                         .compact();
         return jwtToken;
 }
-	}
+
+//    @Override
+//    public User findByAccountNumber(int id) throws UserAccountWithTheIDDoesntExistException {
+//        Optional<User> optional = userRepository.findByAccountNumber(id);
+//        if(optional.isPresent()) {
+//            return optional.get();
+//        }
+//        throw new UserAccountWithTheIDDoesntExistException();
+//    }
+}
     
 
 

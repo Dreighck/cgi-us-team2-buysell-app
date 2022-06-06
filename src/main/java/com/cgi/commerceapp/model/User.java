@@ -10,10 +10,10 @@ import javax.persistence.Table;
 //@Entity
 
 @Document
-@Table(name = "buysell_user")
+//@Table(name = "buysell_user")
 public class User {
     @Id
-    @Column(length = 64)
+//    @Column(length = 64)
     private String username;
     private String name;
     private String email;
@@ -60,7 +60,7 @@ public class User {
 //	public int getAccountNumber() {
 //		return accountNumber;
 //	}
-
+//
 //	public void setAccountNumber(int accountNumber) {
 //		this.accountNumber = accountNumber;
 //	}
