@@ -19,7 +19,7 @@ public class User {
     private String email;
     
     private String password;
-	private int accountNumber;
+//	private int accountNumber;
     public User() {
 
     }
@@ -29,7 +29,7 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
-		this.accountNumber=accountNumber;
+//		this.accountNumber=accountNumber;
     }
     
 	public String getName() {
@@ -57,11 +57,11 @@ public class User {
 		this.password = password;
 	}
 
-	public int getAccountNumber() {
-		return accountNumber;
-	}
+//	public int getAccountNumber() {
+//		return accountNumber;
+//	}
 
-	public void setAccountNumber(int accountNumber) {
-		this.accountNumber = accountNumber;
-	}
+//	public void setAccountNumber(int accountNumber) {
+//		this.accountNumber = accountNumber;
+//	}
 }
